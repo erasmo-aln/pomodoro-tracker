@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime as dt
 
-answer = "y"
-while answer != "n" or answer != "N":
+
+while True:
 
     date_today = dt.today().strftime('%Y-%m-%d')
     begin = input("Start time (for example, 13:47): ")
@@ -27,3 +27,7 @@ while answer != "n" or answer != "N":
     data_to_append_dataframe.to_csv(path_or_buf="../data/dataset.csv", sep=";", index=False, mode="a", header=False)
 
     answer = input("Do you want to add another record? [y/n]: ")
+    if answer == "n" or answer == "N":
+        break
+    else:
+        print("-" * 40)
