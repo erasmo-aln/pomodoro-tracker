@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime as dt
 
-
+answer = "y"
 while answer != "n" or answer != "N":
 
     date_today = dt.today().strftime('%Y-%m-%d')
