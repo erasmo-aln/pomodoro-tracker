@@ -21,6 +21,7 @@ The data have the following columns:
 
 ### How to Use
 You just need to clone the repository and run the ***src/app.py*** file and input the data. Also, you'll need the Pandas package.
+If you want a script that runs the app without opening the terminal and running the *app.py*, you can modify the ***run.ps1*** file, which is a PowerShell script that set location of your folder and runs the app. Your path should look like this: *C:\\Users\\Your_user\\Path_to_folder_here*. Just modify it and place the *run.ps1* in the Desktop, for example, that way you just have to run it with Powershell and input the data.
 
 ***Obs:*** If you wrongly filled data to it, you can open the *data/dataset.csv* file and erase/edit the wrong record.
 

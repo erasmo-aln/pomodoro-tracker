@@ -1,33 +1,31 @@
+import os
+
 import pandas as pd
 from datetime import datetime as dt
 
+import utils
+
 
 while True:
+    data_to_append = utils.get_information()
 
-    date_today = dt.today().strftime('%Y-%m-%d')
-    begin = input("Start time (for example, 13:47): ")
-    end = input("End time (for example, 14:37): ")
-    platform = input("Platform (DSA, MIT OCW...): ")
-    subject = input("Subject (Machine Learning, Probability...): ")
-    section = input("Section (Chapter 3, Lecture 5...): ")
-    total = int(input("Total time (in minutes): "))
+    confirmed = False
+    while confirmed is False:
+        utils.print_confirmation_data(data_dict=data_to_append)
+        ask_to_confirm = input('Answer [y/n]: ').lower()
 
-    data_to_append = {
-        "Date": [date_today],
-        "Begin": [begin],
-        "End": [end],
-        "Platform": [platform],
-        "Subject": [subject],
-        "Section": [section],
-        "Total": [total]
-    }
+        if ask_to_confirm == 'y':
+            confirmed = True
+        else:
+            index_item = int(input('Which item do you want to change? [1 to 7]\nAnswer: '))
+            data_to_append = utils.change_selected_item(data_dict=data_to_append, index=index_item)
 
     data_to_append_dataframe = pd.DataFrame.from_dict(data=data_to_append)
 
     data_to_append_dataframe.to_csv(path_or_buf="../data/dataset.csv", sep=";", index=False, mode="a", header=False)
 
-    answer = input("Do you want to add another record? [y/n]: ")
-    if answer == "n" or answer == "N":
+    ask_to_repeat = input("Do you want to add another record? [y/n]: ").lower()
+    if ask_to_repeat == "n":
         break
     else:
-        print("-" * 40)
+        os.system('cls')
