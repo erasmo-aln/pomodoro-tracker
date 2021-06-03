@@ -1,14 +1,36 @@
 from datetime import datetime as dt
+import shutil
+
+
+def print_help():
+    terminal_width = shutil.get_terminal_size().columns
+    title = 'Pomodoro Tracker Instructions'
+    print()
+    print(
+        f'{title.center(terminal_width)}'
+        f'{"-"*terminal_width}'
+        f'{"Start and End time".center(terminal_width)}\n\n'
+        f'{"The corresponding time of start and end of the Pomodoro. Example: 12:30 and 13:20.".center(terminal_width)}\n\n'
+        f'{"Platform".center(terminal_width)}\n'
+        f'{"The platform that you studied/worked, for example: Udacity, Udemy, Coursera etc.".center(terminal_width)}\n\n'
+        f'{"Subject".center(terminal_width)}\n'
+        f'{"The subject studied, for example: Machine Learning, Statistics, Python etc.".center(terminal_width)}\n\n'
+        f'{"Section".center(terminal_width)}\n'
+        f'''{"The current part that you're in. For example: Week 2, Chapter 5 and Project 2 etc.".center(terminal_width)}\n\n'''
+        f'{"Total time".center(terminal_width)}\n'
+        f'{"This is not a calculated field, so you need to enter the total time in minutes manually yet. This must be equal to the difference of end and start time.".center(terminal_width)}\n'
+        f'{"-"*terminal_width}\n'
+    )
 
 
 def get_information():
     date_today = dt.today().strftime('%Y-%m-%d')
-    begin = input("Start time (for example, 13:47): ")
-    end = input("End time (for example, 14:37): ")
-    platform = input("Platform (DSA, MIT OCW...): ")
-    subject = input("Subject (Machine Learning, Probability...): ")
-    section = input("Section (Chapter 3, Lecture 5...): ")
-    total = int(input("Total time (in minutes): "))
+    begin = input("Start time: ")
+    end = input("End time: ")
+    platform = input("Platform: ")
+    subject = input("Subject: ")
+    section = input("Section: ")
+    total = int(input("Total time: "))
 
     data_to_append = {
         "Date": [date_today],

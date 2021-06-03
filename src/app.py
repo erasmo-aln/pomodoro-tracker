@@ -6,6 +6,7 @@ import utils
 
 
 while True:
+    utils.print_help()
     data_to_append = utils.get_information()
 
     confirmed = False
