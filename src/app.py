@@ -22,7 +22,7 @@ while True:
 
     data_to_append_dataframe = pd.DataFrame.from_dict(data=data_to_append)
 
-    data_to_append_dataframe.to_csv(path_or_buf="../data/dataset.csv", sep=";", index=False, mode="a", header=False)
+    data_to_append_dataframe.to_csv(path_or_buf="data/dataset.csv", sep=";", index=False, mode="a", header=False)
 
     ask_to_repeat = input("Do you want to add another record? [y/n]: ").lower()
     if ask_to_repeat == "n":
