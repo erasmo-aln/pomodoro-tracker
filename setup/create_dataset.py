@@ -1,6 +1,8 @@
 import pandas as pd
+import os
 
 
+os.mkdir('data')
 columns = {
     "Date": pd.Series([], dtype="object"),
     "Begin": pd.Series([], dtype="object"),
@@ -12,5 +14,4 @@ columns = {
 }
 
 dataset = pd.DataFrame.from_dict(columns)
-
 dataset.to_csv("data/data.csv", sep=";", index=False)

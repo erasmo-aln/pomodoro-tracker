@@ -4,7 +4,7 @@ import altair as alt
 from datetime import datetime as dt
 from src.utils import utils
 
-dataset = pd.read_csv('data/dataset.csv', sep=';')
+dataset = pd.read_csv('data/data.csv', sep=';')
 
 st.title(body='Pomodoro Tracker')
 select_option = st.radio(label='Fill or View?', options=['Fill', 'View'])
@@ -52,7 +52,7 @@ if select_option == 'Fill':
             "Total": [total]
         }
         data_to_append_dataframe = pd.DataFrame.from_dict(data=data_to_append)
-        data_to_append_dataframe.to_csv(path_or_buf="data/dataset.csv", sep=";", index=False, mode="a", header=False)
+        data_to_append_dataframe.to_csv(path_or_buf="data/data.csv", sep=";", index=False, mode="a", header=False)
 
         with st.beta_container():
             startcol, endcol = st.beta_columns(2)
