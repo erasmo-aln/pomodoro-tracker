@@ -84,9 +84,3 @@ else:
         st.altair_chart(chart_barh)
     else:
         st.line_chart(data2show_grouped)
-
-# with st.form('my form'):
-#     st.write("Inside the form")
-#     st.text_input('Data: ')
-
-#     submitted = st.form_submit_button("Submit")
