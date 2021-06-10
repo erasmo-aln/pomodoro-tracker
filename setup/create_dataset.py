@@ -13,4 +13,4 @@ columns = {
 
 dataset = pd.DataFrame.from_dict(columns)
 
-dataset.to_csv("../data/dataset.csv", sep=";", index=False)
+dataset.to_csv("data/dataset.csv", sep=";", index=False)
