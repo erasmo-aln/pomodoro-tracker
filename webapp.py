@@ -4,7 +4,16 @@ import altair as alt
 from datetime import datetime as dt
 from src.utils import utils
 
-dataset = pd.read_csv('data/data.csv', sep=';')
+PATH_TO_FOLDER = 'data'
+PATH_TO_DATA = 'data/dataset.csv'
+
+try:
+    dataset = utils.read_dataset(PATH_TO_DATA)
+
+except FileNotFoundError:
+    utils.create_data_folder(PATH_TO_FOLDER)
+    utils.create_dataset(PATH_TO_DATA)
+    dataset = utils.read_dataset(PATH_TO_DATA)
 
 st.title(body='Pomodoro Tracker')
 select_option = st.radio(label='Fill or View?', options=['Fill', 'View'])
