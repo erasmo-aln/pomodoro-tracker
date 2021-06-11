@@ -49,29 +49,33 @@ if select_option == 'Fill':
         submitted = st.form_submit_button("Submit")
 
     # Append to dataset here
+    categories = [platform, subject, section]
     if submitted:
-        start_time = f'{start_hour}:{start_min}'
-        end_time = f'{end_hour}:{end_min}'
+        if not utils.assert_fields(categories):
+            st.warning('You left 1 or more fields blank. Please fill them in.')
+        else:
+            start_time = f'{start_hour}:{start_min}'
+            end_time = f'{end_hour}:{end_min}'
 
-        total = (end_hour * 60 + end_min) - (start_hour * 60 + start_min)
+            total = (end_hour * 60 + end_min) - (start_hour * 60 + start_min)
 
-        data_to_append = {
-            "Date": [date_today],
-            "Begin": [start_time],
-            "End": [end_time],
-            "Platform": [platform],
-            "Subject": [subject],
-            "Section": [section],
-            "Total": [total]
-        }
+            data_to_append = {
+                "Date": [date_today],
+                "Begin": [start_time],
+                "End": [end_time],
+                "Platform": [platform],
+                "Subject": [subject],
+                "Section": [section],
+                "Total": [total]
+            }
 
-        data_to_append_dataframe = pd.DataFrame.from_dict(data=data_to_append)
-        data_to_append_dataframe.to_csv(path_or_buf=PATH_TO_DATA, sep=";", index=False, mode="a", header=False)
+            data_to_append_dataframe = pd.DataFrame.from_dict(data=data_to_append)
+            data_to_append_dataframe.to_csv(path_or_buf=PATH_TO_DATA, sep=";", index=False, mode="a", header=False)
 
-        with st.beta_container():
-            startcol, endcol = st.beta_columns(2)
-            startcol.write('The data was succesfully saved. To refresh the data, click the Refresh button.')
-            endcol.button('Refresh')
+            with st.beta_container():
+                startcol, endcol = st.beta_columns(2)
+                startcol.write('The data was succesfully saved. To refresh the data, click the Refresh button.')
+                endcol.button('Refresh')
 
 else:
     st.sidebar.title(body='Visualization Options')

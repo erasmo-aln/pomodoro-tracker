@@ -66,3 +66,16 @@ def create_container_category(form_category, label):
     else:
         category = category_endcol
     return category
+
+
+def is_filled(category):
+    return bool(len(category))
+
+
+def assert_fields(categories: list):
+    for category in categories:
+        if is_filled(category):
+            continue
+        else:
+            return False
+    return True
