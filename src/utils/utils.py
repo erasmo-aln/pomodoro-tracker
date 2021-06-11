@@ -3,8 +3,12 @@ import pandas as pd
 import os
 
 
-def create_data_folder(folder):
-    os.mkdir(folder)
+def exists_path(path):
+    return os.path.exists(path)
+
+
+def create_folder(folder):
+    os.makedirs(folder)
 
 
 def create_dataset(path):
@@ -20,6 +24,20 @@ def create_dataset(path):
 
     dataset = pd.DataFrame.from_dict(columns)
     dataset.to_csv(path, sep=";", index=False)
+
+
+def get_dataset(path):
+
+    filename = path.split('/')[-1]
+    folder = path.replace(f'/{filename}', '')
+
+    if not exists_path(path):
+        if not exists_path(folder):
+            create_folder(folder)
+        create_dataset(path)
+
+    dataset = pd.read_csv(path, sep=';')
+    return dataset
 
 
 def create_container_time(key):
@@ -48,8 +66,3 @@ def create_container_category(form_category, label):
     else:
         category = category_endcol
     return category
-
-
-def read_dataset(path):
-    dataset = pd.read_csv(path, sep=';')
-    return dataset
