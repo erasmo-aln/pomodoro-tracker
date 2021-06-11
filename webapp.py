@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 from datetime import datetime as dt
 from src.utils import utils
+import os
 
 PATH_TO_FOLDER = 'data'
 PATH_TO_DATA = 'data/dataset.csv'
@@ -11,7 +12,8 @@ try:
     dataset = utils.read_dataset(PATH_TO_DATA)
 
 except FileNotFoundError:
-    utils.create_data_folder(PATH_TO_FOLDER)
+    if not os.path.exists(PATH_TO_FOLDER):
+        utils.create_data_folder(PATH_TO_FOLDER)
     utils.create_dataset(PATH_TO_DATA)
     dataset = utils.read_dataset(PATH_TO_DATA)
 

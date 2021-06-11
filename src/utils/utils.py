@@ -7,7 +7,7 @@ def create_data_folder(folder):
     os.mkdir(folder)
 
 
-def create_dataset(path_to_folder, filename):
+def create_dataset(path):
     columns = {
         "Date": pd.Series([], dtype="object"),
         "Begin": pd.Series([], dtype="object"),
@@ -19,7 +19,7 @@ def create_dataset(path_to_folder, filename):
     }
 
     dataset = pd.DataFrame.from_dict(columns)
-    dataset.to_csv(f"{path_to_folder}/{filename}", sep=";", index=False)
+    dataset.to_csv(path, sep=";", index=False)
 
 
 def create_container_time(key):
