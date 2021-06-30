@@ -79,3 +79,12 @@ def assert_fields(categories: list):
         else:
             return False
     return True
+
+
+def check_length(time):
+    time = str(time)
+    if len(time) == 1:
+        time = str(0) + time
+        return time
+    else:
+        return time

@@ -32,10 +32,14 @@ if select_option == 'Fill':
         # Start Time
         st.subheader('Start time')
         start_hour, start_min = utils.create_container_time(key=1)
+        start_hour = utils.check_length(start_hour)
+        start_min = utils.check_length(start_min)
 
         # End Time
         st.subheader('End time')
         end_hour, end_min = utils.create_container_time(key=2)
+        end_hour = utils.check_length(end_hour)
+        end_min = utils.check_length(end_min)
 
         # Platform
         platform = utils.create_container_category(form_category=form_platform, label='Platform')
@@ -57,7 +61,7 @@ if select_option == 'Fill':
             start_time = f'{start_hour}:{start_min}'
             end_time = f'{end_hour}:{end_min}'
 
-            total = (end_hour * 60 + end_min) - (start_hour * 60 + start_min)
+            total = (int(end_hour) * 60 + int(end_min)) - (int(start_hour) * 60 + int(start_min))
 
             data_to_append = {
                 "Date": [date_today],
