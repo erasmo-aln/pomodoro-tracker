@@ -50,6 +50,9 @@ if select_option == 'Fill':
         # Section
         section = utils.create_container_category(form_category=form_section, label='Section')
 
+        # Summary
+        summary = st.text_area(label='Summary', help='A brief summary of what you studied in this Pomodoro. *This is an optional field.*', height=200)
+
         submitted = st.form_submit_button("Submit")
 
     # Append to dataset here
@@ -70,6 +73,7 @@ if select_option == 'Fill':
                 "Platform": [platform],
                 "Subject": [subject],
                 "Section": [section],
+                "Summary": [summary],
                 "Total": [total]
             }
 

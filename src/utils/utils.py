@@ -66,7 +66,7 @@ def create_container_category(form_category, label):
         with startcol:
             category_startcol = st.checkbox(label=f'Check this if the desired {label.lower()} is selected in the sidebar')
         with endcol:
-            category_endcol = st.text_input(label=f'{label.title()}')
+            category_endcol = st.text_input(label=f'{label.title()}', help=help_dict[label])
     if category_startcol:
         category = form_category
     else:
