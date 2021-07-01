@@ -53,6 +53,12 @@ def create_container_time(key):
 
 
 def create_container_category(form_category, label):
+    help_dict = {
+        'Platform': 'The name of the platform (website, book, university) that you\'re studying. Examples: Udacity, Coursera, Udemy, MIT etc.',
+        'Subject': 'The name of the subject/course that you\'re studying. Examples: Machine Learning, C++ Nanodegree, Deep Learning Specialization etc.',
+        'Section': 'The chapter/section that you are currently in. Examples: Chapter 3, Lecture 5, Problem Set 2 etc.'
+    }
+
     st.subheader(label)
     st.write(f'If {label.lower()} is not available, leave the checkbox unmarked and fill the field on the right.')
     with st.beta_container():
