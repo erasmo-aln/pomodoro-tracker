@@ -45,10 +45,12 @@ def create_container_time(key):
         startcol, endcol = st.beta_columns(2)
 
         with startcol:
-            hour = startcol.selectbox(label='Hour', options=[i for i in range(0, 24)], key=key)
+            hour_key = 'hour' + key
+            hour = startcol.selectbox(label='Hour', options=[i for i in range(0, 24)], key=hour_key)
 
         with endcol:
-            minutes = endcol.selectbox(label='Minutes', options=[i for i in range(0, 60)], key=key)
+            min_key = 'min' + key
+            minutes = endcol.selectbox(label='Minutes', options=[i for i in range(0, 60)], key=min_key)
     return hour, minutes
 
 

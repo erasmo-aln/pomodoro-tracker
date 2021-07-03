@@ -31,13 +31,13 @@ if select_option == 'Fill':
 
         # Start Time
         st.subheader('Start time')
-        start_hour, start_min = utils.create_container_time(key=1)
+        start_hour, start_min = utils.create_container_time(key='1')
         start_hour = utils.check_length(start_hour)
         start_min = utils.check_length(start_min)
 
         # End Time
         st.subheader('End time')
-        end_hour, end_min = utils.create_container_time(key=2)
+        end_hour, end_min = utils.create_container_time(key='2')
         end_hour = utils.check_length(end_hour)
         end_min = utils.check_length(end_min)
 
