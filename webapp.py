@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from datetime import datetime as dt
 from src.utils import utils
 
 
@@ -27,7 +26,7 @@ if select_option == 'Fill':
     with st.form('Data Form'):
         st.write("Fill out the information about your Pomodoro")
 
-        date_today = dt.today().strftime('%Y-%m-%d')
+        date = st.date_input(label="Date:").strftime('%Y-%m-%d')
 
         # Start Time
         st.subheader('Start time')
@@ -67,7 +66,7 @@ if select_option == 'Fill':
             total = (int(end_hour) * 60 + int(end_min)) - (int(start_hour) * 60 + int(start_min))
 
             data_to_append = {
-                "Date": [date_today],
+                "Date": [date],
                 "Begin": [start_time],
                 "End": [end_time],
                 "Platform": [platform],
