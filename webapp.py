@@ -1,3 +1,5 @@
+from datetime import datetime as dt
+from datetime import timedelta
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -26,19 +28,28 @@ if select_option == 'Fill':
     with st.form('Data Form'):
         st.write("Fill out the information about your Pomodoro")
 
+        st.subheader("Date and Time:")
         date = st.date_input(label="Date:").strftime('%Y-%m-%d')
 
         # Start Time
-        st.subheader('Start time')
-        start_hour, start_min = utils.create_container_time(key='1')
-        start_hour = utils.check_length(start_hour)
-        start_min = utils.check_length(start_min)
+        with st.container():
+            startcol, endcol = st.columns(2)
+
+            with startcol:
+                start_time = st.time_input(label="Start time", value=dt.now())
+
+            with endcol:
+                end_time = st.time_input(label="End time", value=(dt.now() + timedelta(minutes=50)))
+
+        # start_hour, start_min = utils.create_container_time(key='1')
+        # start_hour = utils.check_length(start_hour)
+        # start_min = utils.check_length(start_min)
 
         # End Time
-        st.subheader('End time')
-        end_hour, end_min = utils.create_container_time(key='2')
-        end_hour = utils.check_length(end_hour)
-        end_min = utils.check_length(end_min)
+        # st.subheader('End time')
+        # end_hour, end_min = utils.create_container_time(key='2')
+        # end_hour = utils.check_length(end_hour)
+        # end_min = utils.check_length(end_min)
 
         # Platform
         platform = utils.create_container_category(form_category=form_platform, label='Platform')
@@ -60,15 +71,13 @@ if select_option == 'Fill':
         if not utils.assert_fields(categories):
             st.warning('You left 1 or more fields blank. Please fill them in.')
         else:
-            start_time = f'{start_hour}:{start_min}'
-            end_time = f'{end_hour}:{end_min}'
 
-            total = (int(end_hour) * 60 + int(end_min)) - (int(start_hour) * 60 + int(start_min))
+            total = (timedelta(hours=end_time.hour, minutes=end_time.minute) - timedelta(hours=start_time.hour, minutes=start_time.minute)).seconds // 60
 
             data_to_append = {
                 "Date": [date],
-                "Begin": [start_time],
-                "End": [end_time],
+                "Begin": [start_time.strftime("%H:%M")],
+                "End": [end_time.strftime("%H:%M")],
                 "Platform": [platform],
                 "Subject": [subject],
                 "Section": [section],
