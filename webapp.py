@@ -80,8 +80,8 @@ if select_option == 'Fill':
             data_to_append_dataframe = pd.DataFrame.from_dict(data=data_to_append)
             data_to_append_dataframe.to_csv(path_or_buf=PATH_TO_DATA, sep=";", index=False, mode="a", header=False)
 
-            with st.beta_container():
-                startcol, endcol = st.beta_columns(2)
+            with st.container():
+                startcol, endcol = st.columns(2)
                 startcol.write('The data was succesfully saved. To refresh the data, click the Refresh button.')
                 endcol.button('Refresh')
 
