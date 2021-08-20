@@ -98,7 +98,7 @@ else:
 
     platform = st.sidebar.radio(label='Platform', options=list(dataset.Platform.unique()))
     subject = st.sidebar.radio(label='Subject', options=list(dataset.Subject.loc[dataset.Platform == platform].unique()))
-    section = st.sidebar.radio(label='Choose the chart', options=['Overall', 'Sections'])
+    section = st.sidebar.radio(label='Choose the chart', options=['Overall', 'Sections', 'Summaries'])
 
     data2show = dataset.loc[(dataset.Platform == platform) & (dataset.Subject == subject)]
 
@@ -113,7 +113,16 @@ else:
             y=alt.Y('Section', axis=alt.Axis(title=''))
             ).properties(width=700, height=300).configure_axis(grid=False)
 
-    if section == 'Sections':
-        st.altair_chart(chart_barh)
-    else:
+    if section == 'Overall':
         st.line_chart(data2show_grouped)
+
+    elif section == 'Sections':
+        st.altair_chart(chart_barh)
+
+    elif section == 'Summaries':
+        date_selected = st.selectbox(label='Select the date:', options=data2show.Date.unique())
+
+        for index, row in data2show.loc[data2show.Date == date_selected].iterrows():
+            time_header = f"From {row.Begin} to {row.End}:"
+            st.subheader(time_header)
+            st.write(row.Summary)
