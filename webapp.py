@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from src.utils import utils
+import numpy as np
 
 
 FOLDER = 'data'
@@ -31,7 +32,7 @@ if select_option == 'Fill':
         st.subheader("Date and Time:")
         date = st.date_input(label="Date:").strftime('%Y-%m-%d')
 
-        # Start Time
+        # Start and End Time
         with st.container():
             startcol, endcol = st.columns(2)
 
@@ -40,16 +41,6 @@ if select_option == 'Fill':
 
             with endcol:
                 end_time = st.time_input(label="End time", value=(dt.now() + timedelta(minutes=50)))
-
-        # start_hour, start_min = utils.create_container_time(key='1')
-        # start_hour = utils.check_length(start_hour)
-        # start_min = utils.check_length(start_min)
-
-        # End Time
-        # st.subheader('End time')
-        # end_hour, end_min = utils.create_container_time(key='2')
-        # end_hour = utils.check_length(end_hour)
-        # end_min = utils.check_length(end_min)
 
         # Platform
         platform = utils.create_container_category(form_category=form_platform, label='Platform')
@@ -120,9 +111,25 @@ else:
         st.altair_chart(chart_barh)
 
     elif section == 'Summaries':
-        date_selected = st.selectbox(label='Select the date:', options=data2show.Date.unique())
+        # date_selected = st.selectbox(label='Select the date:', options=data2show.Date.unique())
+        dates_available = data2show.Date.unique()
+        total_days = len(dates_available)
+        total_pomodoros = len(data2show)
+        total_minutes = data2show.Total.sum()
 
-        for index, row in data2show.loc[data2show.Date == date_selected].iterrows():
-            time_header = f"From {row.Begin} to {row.End}:"
-            st.subheader(time_header)
-            st.write(row.Summary)
+        st.markdown(f"## Over the course of {total_days} day(s), you applied {total_pomodoros} Pomodoro(s), resulting in a total of {total_minutes} minutes studied.")
+        st.markdown("---")
+
+        for number, date in enumerate(dates_available):
+            with st.container():
+                st.header(f'{pd.to_datetime(date).strftime("%d/%m/%Y")} - {pd.to_datetime(date).strftime("%A")}')
+                POMODORO_INDEX = 1
+                for index, row in data2show.loc[data2show.Date == date].iterrows():
+                    time_header = f"Pomodoro {POMODORO_INDEX} - {row.Begin} to {row.End}"
+                    st.subheader(time_header)
+                    if pd.isnull(row.Summary) or row.Summary == '':
+                        st.write("No Summary.")
+                    else:
+                        st.markdown(f"**Summary**: \n{row.Summary}")
+                    POMODORO_INDEX += 1
+                st.markdown("---")
