@@ -4,7 +4,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from src.utils import utils
-import numpy as np
 
 
 FOLDER = 'data'
@@ -37,10 +36,10 @@ if select_option == 'Fill':
             startcol, endcol = st.columns(2)
 
             with startcol:
-                start_time = st.time_input(label="Start time", value=dt.now())
+                start_time = st.text_input(label="Start time")
 
             with endcol:
-                end_time = st.time_input(label="End time", value=(dt.now() + timedelta(minutes=50)))
+                end_time = st.text_input(label="End time")
 
         # Platform
         platform = utils.create_container_category(form_category=form_platform, label='Platform')
@@ -63,12 +62,12 @@ if select_option == 'Fill':
             st.warning('You left 1 or more fields blank. Please fill them in.')
         else:
 
-            total = (timedelta(hours=end_time.hour, minutes=end_time.minute) - timedelta(hours=start_time.hour, minutes=start_time.minute)).seconds // 60
+            total = (timedelta(hours=dt.strptime(end_time, '%H:%M').hour, minutes=dt.strptime(end_time, '%H:%M').minute) - timedelta(hours=dt.strptime(start_time, '%H:%M').hour, minutes=dt.strptime(start_time, '%H:%M').minute)).seconds // 60
 
             data_to_append = {
                 "Date": [date],
-                "Begin": [start_time.strftime("%H:%M")],
-                "End": [end_time.strftime("%H:%M")],
+                "Begin": [start_time],
+                "End": [end_time],
                 "Platform": [platform],
                 "Subject": [subject],
                 "Section": [section],
