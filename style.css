@@ -1,0 +1,14 @@
+body {
+    color: #2E86C1;
+    background-color: #D6EAF8;
+}
+
+.stButton>button[kind="primary"] {
+    color: #666;
+    border-radius: 50%;
+    height: 8em;
+    width: 8em;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
