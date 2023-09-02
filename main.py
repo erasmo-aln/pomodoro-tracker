@@ -3,15 +3,24 @@ import pandas as pd
 import altair as alt
 from utils import utils
 from pages import track, create
+import time
+
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
 
 FOLDER = 'data'
 DATA = 'data.csv'
 PATH_TO_DATA = '/'.join([FOLDER, DATA])
-
-
-dataset = utils.get_dataset(PATH_TO_DATA)
+WORK, WORK_TIME = 60, 60*50
+REST, REST_TIME = 10, 60*10
 
 st.set_page_config(layout="wide")
+local_css("style.css")
+
+dataset = utils.get_dataset(PATH_TO_DATA)
 
 st.sidebar.title(body='Pomodoro Tracker')
 select_option = st.sidebar.radio(label='Pages', options=['Home', 'Track', 'View', 'Create'], index=1)
@@ -26,6 +35,19 @@ elif select_option == 'Track':
     with st.container():
         form_platform, form_subject, form_section = track.container(dataset)
 
+    button_clicked = st.button("Start")
+
+    if button_clicked:
+        with st.empty():
+            while WORK_TIME:
+                mins, secs = divmod(WORK_TIME, 60)
+                timer = f'{mins:02d}:{secs:02d}'
+                st.markdown(f"<h1 style='text-align: center;'>⏳ {timer}</h1>", unsafe_allow_html=True)
+                #st.header(f"⏳ {timer}")
+                time.sleep(1)
+                WORK_TIME -= 1
+                st.success(f"🔔 {WORK} minutes is over! Time for a break!")
+
     form = st.form('Data Form', clear_on_submit=True)
     with form:
         date, start_time, end_time, summary, submitted = track.form(form)
@@ -35,10 +57,17 @@ elif select_option == 'Track':
                 track.save_dataset(date, start_time, end_time, form_platform, form_subject, form_section, summary, submitted)
 
     if submitted:
-        with st.container():
-            startcol, endcol = st.columns(2)
-            startcol.write('The data was succesfully saved. To refresh the data, click the Refresh button.')
-            endcol.button('Refresh')
+        st.write('The data was succesfully saved. Now take a break.')
+
+        with st.empty():
+            while REST_TIME:
+                # Start the break
+                mins2, secs2 = divmod(REST_TIME, 60)
+                timer2 = f'{mins2:02d}:{secs2:02d}'
+                st.header(f"⏳ {timer2}")
+                time.sleep(1)
+                REST_TIME -= 1
+                st.error(f"⏰ {REST} minute break is over!")
 
 # View Page
 elif select_option == 'View':
